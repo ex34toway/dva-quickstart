@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import { Table, Popconfirm, Pagination } from 'antd';
+import { Link } from 'dva/router';
+import { Table, Popconfirm, Pagination, Menu, Dropdown, Icon } from 'antd';
 
 function UserList({
   total, current, loading, dataSource,
@@ -7,11 +8,40 @@ function UserList({
   onDeleteItem,
   onEditItem,
 }) {
+  function handleMenuClick (e){
+    // onClick={() => onEditItem(record)}
+    switch (e.key){
+      case '0':
+          break;
+      case '1':
+          break;
+      case '2':
+        break;
+    }
+  }
+
+  const dropdownTableMenu = (
+      <Menu onClick={handleMenuClick}>
+        <Menu.Item key="0">
+          <a>编辑</a>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Popconfirm title="确定要删除吗？">
+            <a>删除</a>
+          </Popconfirm>
+        </Menu.Item>
+        <Menu.Item key="2">3d menu item</Menu.Item>
+      </Menu>
+  );
+
   const columns = [{
     title: '姓名',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <a href="#">{text}</a>,
+    render: function(text,record) {
+      var href = "/user/"+record.id;
+      return (<Link to={href}>{text}</Link>);
+    }
   }, {
     title: '年龄',
     dataIndex: 'age',
@@ -23,15 +53,11 @@ function UserList({
   }, {
     title: '操作',
     key: 'operation',
-    render: (text, record) => (
-      <p>
-        <a onClick={() => onEditItem(record)}>编辑</a>
-        &nbsp;
-        <Popconfirm title="确定要删除吗？" onConfirm={() => onDeleteItem(record.id)}>
-          <a>删除</a>
-        </Popconfirm>
-      </p>
-    ),
+    render: function(text, record){
+        return (<Dropdown overlay={dropdownTableMenu}>
+          <a className="ant-dropdown-link">dddd</a>
+        </Dropdown>);
+    },
   }];
 
   return (
