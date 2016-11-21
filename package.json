@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "antd": "^2.4.3",
+    "bootstrap": "^3.3.7",
     "dva": "^1.1.0",
     "mockjs": "^1.0.1-beta3",
     "qs": "^6.3.0",
